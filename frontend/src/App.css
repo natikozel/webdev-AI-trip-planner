@@ -1,0 +1,325 @@
+
+:root {
+    --color-brand--1: #ffb545;
+    --color-brand--2: #00c46a;
+
+    --color-dark--1: #2d3439;
+    --color-dark--2: #42484d;
+    --color-light--1: #aaa;
+    --color-light--2: #ececec;
+    --color-light--3: rgb(214, 222, 224);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+#root {
+    display: flex;
+    height: 100%;
+}
+
+a:link,
+a:visited {
+    color: var(--color-brand--1);
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.logo {
+    height: 5.2rem;
+    align-self: center;
+    margin-bottom: 4rem;
+}
+
+.workouts {
+    list-style: none;
+    height: 77vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.workouts::-webkit-scrollbar {
+    width: 0;
+}
+
+.workout {
+    background-color: var(--color-dark--2);
+    border-radius: 5px;
+    padding: 1.5rem 2.25rem;
+    margin-bottom: 1.75rem;
+    cursor: pointer;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0.75rem 1.5rem;
+}
+
+.workout--running {
+    border-left: 5px solid var(--color-brand--2);
+}
+
+.workout--cycling {
+    border-left: 5px solid var(--color-brand--1);
+}
+
+.workout__title {
+    font-size: 1.7rem;
+    font-weight: 600;
+    grid-column: 1 / -1;
+}
+
+.workout__details {
+    display: flex;
+    align-items: baseline;
+}
+
+.workout__icon {
+    font-size: 1.8rem;
+    margin-right: 0.2rem;
+    height: 0.28rem;
+}
+
+.workout__value {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.workout__unit {
+    font-size: 1.1rem;
+    color: var(--color-light--1);
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.flexed {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.error-message {
+    white-space: pre-line;
+    color: red;
+    font-weight: bold;
+}
+
+.trip-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    align-content: center;
+    flex-direction: row;
+    padding: 20px;
+    flex: 1;
+    margin-left: 270px;
+    overflow-y: auto;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.3s forwards;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    height: 80%;
+    max-height: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transform: scale(0.8);
+    animation: scaleUp 0.3s forwards;
+}
+
+.modal-map {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    to {
+        transform: scale(1);
+    }
+}
+
+.trip-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.trip-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.trip-card h2 {
+    margin-top: 0;
+}
+
+.points-of-interest, .trekking-info {
+    margin-top: 20px;
+}
+
+.points-of-interest ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.points-of-interest li {
+    margin-bottom: 10px;
+}
+
+.trekking-info p {
+    margin: 5px 0;
+}
+
+.trip-card img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.form__btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.form__btn:hover {
+    background-color: #0056b3;
+}
+
+.form__row {
+    margin-bottom: 20px;
+}
+
+.form__label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form__input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.form__input:focus {
+    outline: none;
+    background-color: #fff;
+}
+
+
+.copyright {
+    margin-top: auto;
+    font-size: 1.3rem;
+    text-align: center;
+    color: var(--color-light--1);
+}
+
+.twitter-link:link,
+.twitter-link:visited {
+    color: var(--color-light--1);
+    transition: all 0.2s;
+}
+
+.twitter-link:hover,
+.twitter-link:active {
+    color: var(--color-light--2);
+}
+
+/* MAP */
+#map {
+    flex: 1;
+    height: 100%;
+    background-color: var(--color-light--1);
+}
+
+/* Popup width is defined in JS using options */
+.leaflet-popup .leaflet-popup-content-wrapper {
+    background-color: var(--color-dark--1);
+    color: var(--color-light--2);
+    border-radius: 5px;
+    padding-right: 0.6rem;
+}
+
+.leaflet-popup .leaflet-popup-content {
+    font-size: 1.5rem;
+}
+
+.leaflet-popup .leaflet-popup-tip {
+    background-color: var(--color-dark--1);
+}
+
+.running-popup .leaflet-popup-content-wrapper {
+    border-left: 5px solid var(--color-brand--2);
+}
+
+.cycling-popup .leaflet-popup-content-wrapper {
+    border-left: 5px solid var(--color-brand--1);
+}
