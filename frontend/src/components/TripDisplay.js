@@ -1,12 +1,13 @@
 import {useSelector} from "react-redux";
 import {Circles} from "react-loader-spinner";
 import DayTripCard from "./DayTripCard";
+import TripImage from "./TripImage";
 
 const TripDisplay = () => {
-
     const trip = useSelector((state) => state.trips);
-    const {status, error, days} = trip
-    let content
+    const {status, error, days} = trip;
+
+    let content;
     if (status === 'loading') {
         content = (
             <div className="flexed">
@@ -15,29 +16,34 @@ const TripDisplay = () => {
                     width={80}
                     color={"#4ffddd"}
                     ariaLabel="circles-loading"
-                    wrappedStyle={{}}
+                    wrapperStyle={{}}
                     wrapperClass=""
-                    visible="true"
-                >
-                </Circles>
+                    visible={true}
+                />
             </div>
-        )
+        );
     }
 
-    if (error)
-        content =
+    if (error) {
+        content = (
             <div className="flexed error-message">
                 <p style={{color: "red", maxWidth: "300px"}}>{error}</p>
             </div>
+        );
+    }
 
-    console.log(days)
     return (
-        <div className="trip-display">
-            {content ? content :
-                days.map((day, index) => (
-                    <DayTripCard key={index} {...day}/>
-                ))}
+        <div className="trip-container">
+            <div className="trip-display">
+                {content ? content : (
+                    <>
+                        <TripImage/>
+                        {days?.map((day, index) => <DayTripCard key={index} {...day} />)}
+                    </>
+                )}
+            </div>
         </div>
-    )
-}
-export default TripDisplay
+    );
+};
+
+export default TripDisplay;

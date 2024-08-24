@@ -1,14 +1,16 @@
 import React, {useRef} from 'react';
 import Modal from './Modal';
+import {LeafletMap} from "./LeafletMap";
 
 
-const DayTripCard = ({day, route_length, points_of_interest, trekking}) => {
+const DayTripCard = ({day, route_length, coordinates_arr, points_of_interest, trekking}) => {
 
     const modalRef = useRef();
-
     const handleCardClick = () => {
         modalRef.current.open();
     };
+
+
     return (
         <>
             <div className="trip-card" onClick={handleCardClick}>
@@ -33,8 +35,7 @@ const DayTripCard = ({day, route_length, points_of_interest, trekking}) => {
             </div>
             <Modal ref={modalRef}>
                 <div className="modal-map">
-                    {/* Leaflet map will be constructed here */}
-                    <p>Leaflet map goes here</p>
+                    <LeafletMap poi={points_of_interest} coordinates={coordinates_arr}/>
                 </div>
             </Modal>
         </>
