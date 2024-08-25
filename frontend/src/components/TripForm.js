@@ -12,7 +12,6 @@ const TripForm = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-        console.log(tripDetails)
         dispatch(fetchTrips(tripDetails))
     }
 

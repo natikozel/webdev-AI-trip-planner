@@ -31,15 +31,17 @@ const TripImage = () => {
 
     return (
         imageUrl && (
-            <div className="trip-image">
-                <div className={"image-prompt"}>
-                    <h1 style={{paddingBottom: "20px"}}>Image's generating prompt:</h1>
-                    <p>{prompt_for_image}</p>
+            <>
+                <div className="trip-image">
+                    <div className={"image-prompt"}>
+                        <h1 style={{paddingBottom: "20px"}}>Image's generating prompt:</h1>
+                        <p>{prompt_for_image}</p>
+                    </div>
+                    <img
+                        src={imageUrl}
+                        alt="trip"/>
                 </div>
-                <img
-                    src={imageUrl}
-                    alt="trip"/>
-            </div>
+            </>
         )
     );
 };

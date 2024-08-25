@@ -3,7 +3,6 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import RoutingMachine from "./RoutingMachine";
 import RoutingMachineWrapper from "./RoutingMachine";
 
 let DefaultIcon = L.icon({
@@ -13,9 +12,12 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-export const LeafletMap = ({poi, coordinates}) => {
-    const initialPosition = coordinates[0];
+export const LeafletMap = ({poi}) => {
 
+    let allPoi = poi;
+    if (poi[0]?.day)
+        allPoi = poi.flatMap(day => day.points_of_interest);
+    const initialPosition = allPoi[0].coordinates_arr;
 
     return (
         <MapContainer center={initialPosition} zoom={13} scrollWheelZoom className="leaflet-container">
@@ -23,10 +25,8 @@ export const LeafletMap = ({poi, coordinates}) => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {coordinates.map((position, idx) => (
-                <Marker key={idx} position={position}/>
-            ))}
-            <RoutingMachineWrapper coordinates={coordinates}/>
+            <RoutingMachineWrapper allPoi={allPoi}/>
         </MapContainer>
+
     );
 };

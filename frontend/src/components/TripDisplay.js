@@ -2,6 +2,8 @@ import {useSelector} from "react-redux";
 import {Circles} from "react-loader-spinner";
 import DayTripCard from "./DayTripCard";
 import TripImage from "./TripImage";
+import {LeafletMap} from "./LeafletMap";
+import React from "react";
 
 const TripDisplay = () => {
     const trip = useSelector((state) => state.trips);
@@ -33,14 +35,17 @@ const TripDisplay = () => {
     }
     return (
         <div className="trip-container">
-            <div className="trip-display">
-                {content ? content : (
-                    <>
+            {content ? content :
+                !!days.length &&
+                <>
+                    <div className="trip-display">
                         <TripImage/>
                         {days?.map((day, index) => <DayTripCard key={index} {...day} />)}
-                    </>
-                )}
-            </div>
+                    </div>
+                    <div className="map-container">
+                        <LeafletMap poi={days}/>
+                    </div>
+                </>}
         </div>
     );
 };

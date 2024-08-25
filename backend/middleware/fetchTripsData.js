@@ -14,11 +14,13 @@ const params = {
     "seed_variation": 1,
     "steps": 10
 }
+
 const tripsGuideSettings = `
 You are a great trip planner and an expert in various points of interest around the world.
-You're able to take a name of a country and the type of trip (either by Bicycle or by Car) and return a detailed route trip guide.
-Based on the information you provide, the user has to structure a map of poly lines that he can connect and follow through his trip.
-This is critical because it means you have to also provide the exact coordinates (latitude, longitude) for each point of interest.
+You're able to take a name of a country and the type of trip (either by Bicycle or by Car) and return a detailed trip with it's route guide.
+Based on the information you provide, the user has to build a map of poly lines with a routing machine that he can later connect and follow through his trip.
+This is critical because it means you have to also provide the exact coordinates (latitude, longitude) for each point of interest throughout the trip.
+The entire trip is one big continuous route split to 3 days, this essentially means that each every day (from the second one onwards) is continuing from the previously stopped point.
 You only return the trip details in a JSON format according to the follow example and the following example only (in plain English):
 {
 days: [
@@ -27,20 +29,18 @@ days: [
   "route_length": 80,
   "points_of_interest": [
     {
+      "coordinates_arr": [-104.05, 48.99]
       "name": "Mendoza Wine Region",
       "beginKM": 0,
       "endKM": 20
     },
     {
+      "coordinates_arr": [-97.22, 45.94]
       "name": "Maipón Town",
-      "beginKM": 70,
-      "endKM": 80   
+      "beginKM": 30,
+      "endKM": 50   
      }
   ],
-  coordinates_arr: [
-  [-104.05, 48.99],
-  [-97.22, 45.94]
-  ]
   "trekking": {
     "terrain": "flat",
     "incline": "gentle",
@@ -53,10 +53,57 @@ The returned data should be informative and detailed and should include the leng
 You know that if the user's trip type is "Bicycle" he's only allowed to travel up to 80 kilometers per day, and if it's "Car" the minimum is 80 kilometers per day, and it goes up to 300 kilometers per day.
 You make sure that the user can use the information to create detailed poly lines (in his map) and plan schedule per day for the trip since your information is so detailed and informative that he can manage an entire trip with just one of your responses.
 Respond only in JSON format. Do not include any additional text or explanations. Your response should be strictly valid JSON without any commentary, descriptions, or formatting outside the JSON structure.
+You will be punished and your response will be ignored if it won't match exactly the JSON format in the example above.
 The most important rule you must follow is to provide the correct coordinates for each point of interest, they must be correctly structured in the [latitude, longitude] format without any mistakes.
+More than anything, double check and triple check to make sure that the latitude and longitude coordinates you provide are correct and as accurate as possible.
 Don't include any unnecessary commas and follow the JSON structure exactly as shown in the example.
 If you encounter any unexpected struggles you will return an empty JSON as {}
 `
+
+
+// const tripsGuideSettings = `
+// You are a great trip planner and an expert in various points of interest around the world.
+// You're able to take a name of a country and the type of trip (either by Bicycle or by Car) and return a detailed route trip guide.
+// Based on the information you provide, the user has to structure a map of poly lines that he can connect and follow through his trip.
+// This is critical because it means you have to also provide the exact coordinates (latitude, longitude) for each point of interest.
+// You only return the trip details in a JSON format according to the follow example and the following example only (in plain English):
+// {
+// days: [
+//     {
+//   "day": 1,
+//   "route_length": 80,
+//   "points_of_interest": [
+//     {
+//       "name": "Mendoza Wine Region",
+//       "beginKM": 0,
+//       "endKM": 20
+//     },
+//     {
+//       "name": "Maipón Town",
+//       "beginKM": 70,
+//       "endKM": 80
+//      }
+//   ],
+//   coordinates_arr: [
+//   [-104.05, 48.99],
+//   [-97.22, 45.94]
+//   ]
+//   "trekking": {
+//     "terrain": "flat",
+//     "incline": "gentle",
+//     "views": "Andes mountain range"
+//   }
+// }
+// ]
+// }
+// The returned data should be informative and detailed and should include the length of the route per day, points of interest in each day and trekking information.
+// You know that if the user's trip type is "Bicycle" he's only allowed to travel up to 80 kilometers per day, and if it's "Car" the minimum is 80 kilometers per day, and it goes up to 300 kilometers per day.
+// You make sure that the user can use the information to create detailed poly lines (in his map) and plan schedule per day for the trip since your information is so detailed and informative that he can manage an entire trip with just one of your responses.
+// Respond only in JSON format. Do not include any additional text or explanations. Your response should be strictly valid JSON without any commentary, descriptions, or formatting outside the JSON structure.
+// The most important rule you must follow is to provide the correct coordinates for each point of interest, they must be correctly structured in the [latitude, longitude] format without any mistakes.
+// Don't include any unnecessary commas and follow the JSON structure exactly as shown in the example.
+// If you encounter any unexpected struggles you will return an empty JSON as {}
+// `
 
 const imageGeneratorSettings = `
 You are an expert AI image generator specializing in creating images that resemble specific countries based on trip details.
@@ -73,7 +120,7 @@ const tripPromptCrafter = (country, trip_type) => `
 I'm going to a trip in ${country} and I'm planning to rent a ${trip_type} for the trip.
 Give me a trip route guide for the entire 3 days and include the following information:
 The length of the route (and per day)
-Points of interest in each day
+Points of interest in each day with their accurate and precise exact coordinates
 Trekking in each day.
 Show me the information in an informative way so I can use the information to create detailed poly lines and schedule per day for the trip.
 `
@@ -85,20 +132,20 @@ const fetchTripsData = async (country, trip_type) => {
     while (true) {
         try {
             result = await analyzePrompt(prompt, tripsGuideSettings);
-            if (!Array.isArray(result))
+            if (!result.days || !Array.isArray(result.days))
                 throw new Error("Invalid response from AI model")
             break; // Exit loop if successful
         } catch (error) {
             console.error(`Error analyzing prompt`, error);
         }
     }
-    const newPrompt = await new Prompt({prompt_string: prompt, country, trip_type, result}).save()
+    const newPrompt = await new Prompt({prompt_string: prompt, country, trip_type, result: result.days}).save()
 
     const allPoi = result.days?.map(day => day.points_of_interest?.map(point => point.name)).flat()
     const allTrekkings = result.days?.map(day => day.trekking.views).flat()
     const {id: imageId, prompt_for_image} = await fetchImagePrompt(newPrompt._id, country, trip_type, allPoi, allTrekkings)
 
-    return {imageId, prompt_for_image, result};
+    return {imageId, prompt_for_image, result: result.days};
 }
 
 

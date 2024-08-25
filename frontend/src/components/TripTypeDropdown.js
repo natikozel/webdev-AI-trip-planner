@@ -1,7 +1,7 @@
 import Select from "react-select";
 import React from "react";
 import {useDispatch} from "react-redux";
-import {updateCountry, updateTripType} from "../store/slices/TripSlice";
+import {updateTripType} from "../store/slices/TripSlice";
 
 const TripTypeDropdown = () => {
     const dispatch = useDispatch()
