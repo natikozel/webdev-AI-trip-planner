@@ -85,6 +85,8 @@ const fetchTripsData = async (country, trip_type) => {
     while (true) {
         try {
             result = await analyzePrompt(prompt, tripsGuideSettings);
+            if (!Array.isArray(result))
+                throw new Error("Invalid response from AI model")
             break; // Exit loop if successful
         } catch (error) {
             console.error(`Error analyzing prompt`, error);
@@ -94,8 +96,9 @@ const fetchTripsData = async (country, trip_type) => {
 
     const allPoi = result.days?.map(day => day.points_of_interest?.map(point => point.name)).flat()
     const allTrekkings = result.days?.map(day => day.trekking.views).flat()
-    const imageId = await fetchImagePrompt(newPrompt._id, country, trip_type, allPoi, allTrekkings)
-    return {imageId, result};
+    const {id: imageId, prompt_for_image} = await fetchImagePrompt(newPrompt._id, country, trip_type, allPoi, allTrekkings)
+
+    return {imageId, prompt_for_image, result};
 }
 
 
@@ -129,7 +132,7 @@ const fetchImagePrompt = async (promptId, country, trip_type, allPoi, allTrekkin
 
         const {id} = response.data;
         await new Image({image_generated_id: id, image_prompt: prompt_for_image, trip_prompt_id: promptId}).save()
-        return id;
+        return {id, prompt_for_image};
     } catch (error) {
         console.error(error);
     }

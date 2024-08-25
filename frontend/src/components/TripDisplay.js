@@ -31,7 +31,6 @@ const TripDisplay = () => {
             </div>
         );
     }
-
     return (
         <div className="trip-container">
             <div className="trip-display">

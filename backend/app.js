@@ -37,10 +37,11 @@ app.post('/generate-trips', async (req, res, next) => {
             throw new AppError(400, 'Failed to fetch trip data', 'Country and Trip Type are required')
 
 
-        const {imageId, result: trips} = await fetchTripsData(country, trip_type)
+        const {imageId, result: trips, prompt_for_image} = await fetchTripsData(country, trip_type)
 
         res.status(200).json({
             trips,
+            prompt_for_image,
             imageId
         })
     } catch (err) {

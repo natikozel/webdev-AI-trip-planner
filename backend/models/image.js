@@ -5,7 +5,9 @@ const imageSchema = new mongoose.Schema({
         type: String,
         ref: 'GeneratedImage'
     },
-    url: String,
+    response:{
+      type: Object
+    },
     image_prompt: {
         type: String,
         required: true
