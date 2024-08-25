@@ -36,6 +36,7 @@ export const fetchImage = createAsyncThunk(
 
                     return response.data;
                 } else {
+                    dispatch(updateWaitTime(response.data.wait_time))
                     await new Promise(resolve => setTimeout(() => {
                         dispatch(fetchImage(imageId))
                     }, (response.data.wait_time + 1) * 1000));
@@ -57,7 +58,12 @@ const tripImageSlice = createSlice({
         status: 'idle',
         error: null
     },
-    reducers: {},
+    reducers: {
+        updateWaitTime: (state, action) => {
+            console.log(action)
+            state.wait_time = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchImage.pending, (state) => {
@@ -78,4 +84,5 @@ const tripImageSlice = createSlice({
     }
 });
 
+export const {updateWaitTime} = tripImageSlice.actions;
 export default tripImageSlice.reducer;

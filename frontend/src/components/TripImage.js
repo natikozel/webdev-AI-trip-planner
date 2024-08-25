@@ -6,7 +6,7 @@ import {ProgressBar} from "react-loader-spinner";
 const TripImage = () => {
     const dispatch = useDispatch();
     const {imageId, prompt_for_image} = useSelector((state) => state.trips);
-    const {imageUrl, status} = useSelector((state) => state.image);
+    const {imageUrl, status, wait_time} = useSelector((state) => state.image);
 
     useEffect(() => {
         if (imageId) {
@@ -16,18 +16,22 @@ const TripImage = () => {
 
     if (status === 'loading')
         return (
-            <div className="trip-image">
-                <ProgressBar
-                    visible={true}
-                    height="80"
-                    width="80"
-                    color="#4fa94d"
-                    ariaLabel="progress-bar-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                />
-            </div>
+            <>
+                <h4>{`Approximate amount of seconds until image is ready: ${wait_time}`}</h4>
+                <div className="trip-image">
+                    <ProgressBar
+                        visible={true}
+                        height="80"
+                        width="80"
+                        color="#4fa94d"
+                        ariaLabel="progress-bar-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                    />
+                </div>
+            </>
         )
+    console.log(wait_time)
 
     return (
         imageUrl && (
