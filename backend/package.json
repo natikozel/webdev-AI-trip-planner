@@ -4,8 +4,8 @@
   "description": "",
   "main": "api/index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon -r dotenv/config app.js"
+    "start": "node api/index.js",
+    "dev": "nodemon -r dotenv/config api/index.js"
   },
   "keywords": [],
   "author": "",
