@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+# Trip Planner
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-index).
+## Live Demo
+**You can see the `Trip Planner` project Live On:** [Here](https://webdev-ai-project.vercel.app)
 
-## Available Scripts
 
-In the project directory, you can run:
+## Overview
 
-### `npm start`
+Trip Planner is a web application designed to help users plan their trips by providing detailed information about points of interest, routes, and images. The application uses React for the frontend and Node.js for the backend, with data stored in MongoDB.
 
-Runs the index in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Display points of interest on a map using Leaflet.
+- Route planning with draggable waypoints.
+- Fetch and display images related to the trip.
+- Responsive design for various screen sizes.
 
-### `npm test`
+## Technologies Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-index/docs/running-tests) for more information.
+### Frontend
 
-### `npm run build`
+- React
+- Redux Toolkit
+- Leaflet
+- Axios
 
-Builds the index for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Backend
 
-The build is minified and the filenames include the hashes.\
-Your index is ready to be deployed!
+- Node.js
+- Express
+- MongoDB
+- Mongoose
 
-See the section about [deployment](https://facebook.github.io/create-react-index/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+### Prerequisites
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Node.js
+- npm
+- MongoDB
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Clone the repository:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    ```sh
+    git clone https://github.com/natikozel/webdev-ai-project.git
+    cd trip-planner
+    ```
 
-## Learn More
+2. Install dependencies for both frontend and backend:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-index/docs/getting-started).
+    ```sh
+    cd frontend
+    npm install
+    cd ../backend
+    npm install
+    ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. Set up environment variables:
 
-### Code Splitting
+    - Create a `.env` file in the `frontend` directory and add the following:
 
-This section has moved here: [https://facebook.github.io/create-react-index/docs/code-splitting](https://facebook.github.io/create-react-index/docs/code-splitting)
+        ```dotenv
+        REACT_APP_SERVER_ENDPOINT_URL=http://localhost:8080
+        ```
 
-### Analyzing the Bundle Size
+    - Create a `.env` file in the `backend` directory and add the following:
 
-This section has moved here: [https://facebook.github.io/create-react-index/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-index/docs/analyzing-the-bundle-size)
+        ```dotenv
+        PORT=8080
+        GROQ_API_KEY=your_groq_api_key
+        MONGODB_URI=your_mongodb_uri
+        STABLEHORDE_API_KEY=your_stablehorde_api_key
+        STABLEHORDE_API_POST_URL=https://stablehorde.net/api/v2/generate/async
+        STABLEHORDE_API_STATUS_URL=https://stablehorde.net/api/v2/generate/status
+        ```
 
-### Making a Progressive Web App
+### Running the Application
 
-This section has moved here: [https://facebook.github.io/create-react-index/docs/making-a-progressive-web-index](https://facebook.github.io/create-react-index/docs/making-a-progressive-web-index)
+1. Start the backend server:
 
-### Advanced Configuration
+    ```sh
+    cd backend
+    npm start
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-index/docs/advanced-configuration](https://facebook.github.io/create-react-index/docs/advanced-configuration)
+2. Start the frontend development server:
 
-### Deployment
+    ```sh
+    cd frontend
+    npm start
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-index/docs/deployment](https://facebook.github.io/create-react-index/docs/deployment)
+3. Open your browser and navigate to `http://localhost:3000`.
 
-### `npm run build` fails to minify
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-index/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-index/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Frontend
+
+- `src`
+    - `components`: React components
+    - `store`: Redux slices and store configuration
+    - `App.css`: Global styles
+    - `index.js`: Entry point
+
+### Backend
+
+- `src`
+    - `middleware`: Express middleware
+    - `models`: Mongoose models
+    - `routes`: Express routes
+    - `server.js`: Entry point
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
