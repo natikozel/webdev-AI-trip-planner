@@ -6,7 +6,7 @@
 
 ## Overview
 
-Trip Planner is a web application designed to help users plan their trips by providing detailed information about points of interest, routes, and images. The application uses React for the frontend and Node.js for the backend, with data stored in MongoDB.
+Trip Planner is a comprehensive web application designed to assist users in planning their trips. It provides detailed information about points of interest, routes, and images, leveraging technologies like React for the frontend and Node.js for the backend, with data stored in MongoDB. The application features an interactive map with draggable waypoints, responsive design, and the ability to fetch and display relevant images for a seamless trip planning experience.
 
 ## Features
 
