@@ -1,7 +1,7 @@
 # Trip Planner
 
 ## Live Demo
-**You can see the `Trip Planner` project Live On:** [Here](https://webdev-ai-project.vercel.app)
+**You can see the `Trip Planner` project Live On:** [Here](https://webdev-proj-front.vercel.app/)
 
 
 ## Overview
