@@ -110,7 +110,8 @@ Trip Planner is a comprehensive web application designed to assist users in plan
     - `middleware`: Express middleware
     - `models`: Mongoose models
     - `routes`: Express routes
-    - `server.js`: Entry point
+- `api`
+    - `index.js` : Entry point
 
 ## Contributing
 

@@ -33,6 +33,9 @@ const TripDisplay = () => {
             </div>
         );
     }
+
+    console.log(days)
+
     return (
         <div className="trip-container">
             {content ? content :
