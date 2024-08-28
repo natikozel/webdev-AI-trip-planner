@@ -114,6 +114,33 @@ It provides detailed information about points of interest, routes, and images, l
     - `routes`: Express routes
 - `api`
     - `index.js` : Entry point
+ 
+
+## **Images:**
+
+### Initial Form
+- Shows the form where you choose which country you want to travel and which type do you want the trip to be (currently either Car or Bicycle trips)
+
+  ![cropped](https://i.ibb.co/Jv3tST8/1.png)
+
+### Trip Image
+
+- With the usage of StableHorde's API, the web app makes use of an intelligent AI model that generates an image based on a given prompt.
+- To the left side is the prompt that created the image on the right side.
+
+  ![cropped](https://i.ibb.co/yFJq6DZ/3.png)
+
+### Trip cards
+- Card components that breaks down daily activities for easy review, planning and displays itinerary details on that specific day.
+- Also clickable to view a route map for that particular day.
+
+  ![cropped](https://i.ibb.co/2nfrwxr/2.png)
+
+### Trip Route
+- Integrated with Leaflet and an OSRM server, the web app creates a detailed routing machine and displays it intuitvely and fun.
+
+  ![cropped](https://i.ibb.co/L6GN5SD/4.png)
+
 
 ## Contributing
 
